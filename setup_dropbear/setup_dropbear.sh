@@ -62,7 +62,7 @@ for module in $(echo ${MODULES}); do
   fi
 done
 NEW_MODULES="${NEW_MODULES} ${ar18_modules[@]}"
-sed -i -e "s/^MODULES=.*/MODULES=${NEW_MODULES}/g" "/etc/mkinitcpio.conf"
+echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^MODULES=.*/MODULES=${NEW_MODULES}/g" "/etc/mkinitcpio.conf"
 
 NEW_HOOKS=""
 for hook in $(echo ${HOOKS}); do
@@ -76,7 +76,7 @@ for hook in $(echo ${HOOKS}); do
     NEW_HOOKS="${NEW_HOOKS} ${hook}"
   fi
 done
-sed -i -e "s/^HOOKS=.*/HOOKS=${NEW_HOOKS}/g" "/etc/mkinitcpio.conf"
+echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^HOOKS=.*/HOOKS=${NEW_HOOKS}/g" "/etc/mkinitcpio.conf"
 
 #echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/config/${ar18_deployment_target}" "/etc/dropbear/config"
 
