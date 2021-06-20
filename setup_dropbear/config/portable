@@ -4,4 +4,10 @@
 #-p 2222 : Listen Dropbear ssh server on specified address and TCP port. If just a port such as 2222 is given listen on all addresses. up to 10 can be specified (default 22 if none specified).
 #-s : Disable password logins.
 #DROPBEAR_OPTIONS="-I 180 -j -k -p 2222 -s"
-DROPBEAR_OPTIONS="-I 180 -j -k -p 2222"
+#DROPBEAR_OPTIONS="-I 180 -j -k -p 2222"
+
+declare -ag ar18_modules
+ar18_modules=(
+  iwlwifi
+  e1000e
+)

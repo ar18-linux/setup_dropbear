@@ -44,7 +44,41 @@ set +u
 ar18_deployment_target="$(read_target "${1}")"
 set -u
 
-echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/config/${ar18_deployment_target}" "/etc/dropbear/config"
+source_or_execute_config "source" "setup_dropbear" "${ar18_deployment_target}"
+
+. "/etc/mkinitcpio.conf"
+
+NEW_MODULES=""
+for module in $(echo ${MODULES}); do
+  included=0
+  for my_module in $(echo ${ar18_modules}); do
+    if [ "${my_module}" = "${module}" ]; then
+      included=1
+      break
+    fi
+  done
+  if [ "${included}" = "0" ]; then
+    NEW_MODULES="${NEW_MODULES} ${module}"
+  fi
+done
+NEW_MODULES="${NEW_MODULES} ${ar18_modules[@]}"
+sed -i -e "s/^MODULES=.*/MODULES=${NEW_MODULES}/g" "/etc/mkinitcpio.conf"
+
+NEW_HOOKS=""
+for hook in $(echo ${HOOKS}); do
+  if [ "${hook}" = "filesystems" ]; then
+    NEW_HOOKS="${NEW_HOOKS} netconf dropbear encryptssh ${hook}"
+  elif [ "${hook}" = "netconf" ] \
+  || [ "${hook}" = "dropbear" ] \
+  || [ "${hook}" = "encryptssh" ]; then
+    continue
+  else
+    NEW_HOOKS="${NEW_HOOKS} ${hook}"
+  fi
+done
+sed -i -e "s/^HOOKS=.*/HOOKS=${NEW_HOOKS}/g" "/etc/mkinitcpio.conf"
+
+#echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/config/${ar18_deployment_target}" "/etc/dropbear/config"
 
 ##################################SCRIPT_END###################################
 # Restore old shell values
