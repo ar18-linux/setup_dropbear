@@ -40,6 +40,12 @@ pacman_install dropbear
 
 aur_install mkinitcpio-dropbear mkinitcpio-utils
 
+set +u
+ar18_deployment_target="$(read_target "${1}")"
+set -u
+
+echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/config/${ar18_deployment_target}" "/etc/dropbear/config"
+
 ##################################SCRIPT_END###################################
 # Restore old shell values
 set +x
