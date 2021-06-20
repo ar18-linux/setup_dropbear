@@ -58,16 +58,16 @@ for module in $(echo ${MODULES}); do
     fi
   done
   if [ "${included}" = "0" ]; then
-    NEW_MODULES="${NEW_MODULES} ${module}"
+    NEW_MODULES="${NEW_MODULES}${module} "
   fi
 done
 NEW_MODULES="${NEW_MODULES} ${ar18_modules[@]}"
-echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^MODULES=.*/MODULES=${NEW_MODULES}/g" "/etc/mkinitcpio.conf"
+echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^MODULES=.*/MODULES=\"${NEW_MODULES}\"/g" "/etc/mkinitcpio.conf"
 
 NEW_HOOKS=""
 for hook in $(echo ${HOOKS}); do
   if [ "${hook}" = "filesystems" ]; then
-    NEW_HOOKS="${NEW_HOOKS} netconf dropbear encryptssh ${hook}"
+    NEW_HOOKS="${NEW_HOOKS}netconf dropbear encryptssh ${hook} "
   elif [ "${hook}" = "netconf" ] \
   || [ "${hook}" = "dropbear" ] \
   || [ "${hook}" = "encryptssh" ]; then
@@ -76,7 +76,7 @@ for hook in $(echo ${HOOKS}); do
     NEW_HOOKS="${NEW_HOOKS} ${hook}"
   fi
 done
-echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^HOOKS=.*/HOOKS=${NEW_HOOKS}/g" "/etc/mkinitcpio.conf"
+echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^HOOKS=.*/HOOKS=\"${NEW_HOOKS}\"/g" "/etc/mkinitcpio.conf"
 
 #echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/config/${ar18_deployment_target}" "/etc/dropbear/config"
 
