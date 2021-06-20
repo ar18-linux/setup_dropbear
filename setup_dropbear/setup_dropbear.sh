@@ -61,7 +61,7 @@ for module in $(echo ${MODULES}); do
     NEW_MODULES="${NEW_MODULES}${module} "
   fi
 done
-NEW_MODULES="${NEW_MODULES} ${ar18_modules[@]}"
+NEW_MODULES="${NEW_MODULES}${ar18_modules[@]}"
 echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^MODULES=.*/MODULES=\"${NEW_MODULES}\"/g" "/etc/mkinitcpio.conf"
 
 NEW_HOOKS=""
@@ -73,7 +73,7 @@ for hook in $(echo ${HOOKS}); do
   || [ "${hook}" = "encryptssh" ]; then
     continue
   else
-    NEW_HOOKS="${NEW_HOOKS} ${hook}"
+    NEW_HOOKS="${NEW_HOOKS}${hook} "
   fi
 done
 echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^HOOKS=.*/HOOKS=\"${NEW_HOOKS}\"/g" "/etc/mkinitcpio.conf"
