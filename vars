@@ -1,0 +1,5 @@
+module_name="setup_dropbear"
+
+if [ ! -v ar18_install_dir ]; then
+  install_dir="/opt/ar18"
+fi
