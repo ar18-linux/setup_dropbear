@@ -36,7 +36,7 @@ if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"
 obtain_sudo_password
 import_vars
 
-pacman_install dropbear
+pacman_install dropbear mkinitcpio-netconf
 
 aur_install mkinitcpio-dropbear mkinitcpio-utils
 
@@ -48,10 +48,11 @@ source_or_execute_config "source" "setup_dropbear" "${ar18_deployment_target}"
 
 . "/etc/mkinitcpio.conf"
 
+IFS=$' \t\n'
 NEW_MODULES=""
 for module in $(echo ${MODULES}); do
   included=0
-  for my_module in $(echo ${ar18_modules}); do
+  for my_module in "${ar18_modules[@]}"; do
     if [ "${my_module}" = "${module}" ]; then
       included=1
       break
@@ -77,7 +78,9 @@ for hook in $(echo ${HOOKS}); do
   fi
 done
 echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^HOOKS=.*/HOOKS=\"${NEW_HOOKS}\"/g" "/etc/mkinitcpio.conf"
-
+for item in "${[@]}"; do
+  echo "${item}"
+done
 #echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/config/${ar18_deployment_target}" "/etc/dropbear/config"
 
 ##################################SCRIPT_END###################################
