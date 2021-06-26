@@ -83,9 +83,9 @@ done
 
 # Setup allowed public keys to connect
 echo "${ar18_sudo_password}" | sudo -Sk rm -f "/etc/dropbear/root_key"
-echo "${ar18_sudo_password}" | sudo -Sk echo "" > "/etc/dropbear/root_key"
+echo "${ar18_sudo_password}" | sudo -Sk sh -c "echo '' > '/etc/dropbear/root_key'"
 for my_key in "${ar18_public_keys[@]}"; do
-  echo "${ar18_sudo_password}" | sudo -Sk echo "${my_key}" >> "/etc/dropbear/root_key"
+  echo "${ar18_sudo_password}" | sudo -Sk sh -c "echo \"${my_key}\" >> \"/etc/dropbear/root_key\""
 done
 echo "${ar18_sudo_password}" | sudo -Sk chmod 600 "/etc/dropbear/root_key"
 
