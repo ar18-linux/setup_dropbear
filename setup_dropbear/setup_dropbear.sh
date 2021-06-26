@@ -80,6 +80,7 @@ for hook in $(echo ${HOOKS}); do
     NEW_HOOKS="${NEW_HOOKS}${hook} "
   fi
 done
+echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^HOOKS=.*/HOOKS=\"${NEW_HOOKS}\"/g" "/etc/mkinitcpio.conf"
 
 # Setup allowed public keys to connect
 echo "${ar18_sudo_password}" | sudo -Sk rm -f "/etc/dropbear/root_key"
