@@ -88,6 +88,7 @@ echo "${ar18_sudo_password}" | sudo -Sk chmod 600 "/etc/dropbear/root_key"
 
 echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
 
+
 #echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/config/${ar18_deployment_target}" "/etc/dropbear/config"
 
 ##################################SCRIPT_END###################################
