@@ -80,7 +80,7 @@ for hook in $(echo ${HOOKS}); do
 done
 
 # Setup allowed public keys to connect
-echo "" > "/etc/dropbear/root_key"
+echo "${ar18_sudo_password}" | sudo -Sk echo "" > "/etc/dropbear/root_key"
 for my_key in "${ar18_public_keys[@]}"; do
   echo "${ar18_sudo_password}" | sudo -Sk echo "${my_key}" >> "/etc/dropbear/root_key"
 done
