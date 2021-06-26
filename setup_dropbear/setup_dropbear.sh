@@ -36,9 +36,9 @@ if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"
 obtain_sudo_password
 import_vars
 
-pacman_install dropbear mkinitcpio-netconf mkinitcpio-utils
+pacman_install mkinitcpio-dropbear mkinitcpio-netconf mkinitcpio-utils
 
-aur_install mkinitcpio-dropbear mkinitcpio-utils
+#aur_install mkinitcpio-dropbear mkinitcpio-utils
 
 set +u
 ar18_deployment_target="$(read_target "${1}")"
@@ -71,11 +71,18 @@ for hook in $(echo ${HOOKS}); do
     NEW_HOOKS="${NEW_HOOKS}netconf dropbear encryptssh ${hook} "
   elif [ "${hook}" = "netconf" ] \
   || [ "${hook}" = "dropbear" ] \
-  || [ "${hook}" = "encryptssh" ]; then
+  || [ "${hook}" = "encryptssh" ] \
+  || [ "${hook}" = "encrypt" ]; then
     continue
   else
     NEW_HOOKS="${NEW_HOOKS}${hook} "
   fi
+done
+
+# Setup allowed public keys to connect
+echo "" > "/etc/dropbear/root_key"
+for my_key in "${ar18_public_keys[@]}"; do
+  echo "${my_key}" >> "/etc/dropbear/root_key"
 done
 
 echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
