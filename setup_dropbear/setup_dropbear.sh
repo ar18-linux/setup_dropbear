@@ -82,8 +82,9 @@ done
 # Setup allowed public keys to connect
 echo "" > "/etc/dropbear/root_key"
 for my_key in "${ar18_public_keys[@]}"; do
-  echo "${my_key}" >> "/etc/dropbear/root_key"
+  echo "${ar18_sudo_password}" | sudo -Sk echo "${my_key}" >> "/etc/dropbear/root_key"
 done
+echo "${ar18_sudo_password}" | sudo -Sk chmod 600 "/etc/dropbear/root_key"
 
 echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
 
