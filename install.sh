@@ -43,6 +43,8 @@ set +u
 ar18_deployment_target="$(read_target "${1}")"
 set -u
 
+echo "${ar18_sudo_password}" | sudo -Sk chmod +x "${script_dir}/setup_dropbear/setup_dropbear.sh"
+
 "${script_dir}/setup_dropbear/setup_dropbear.sh" "${ar18_deployment_target}"
 
 ##################################SCRIPT_END###################################
