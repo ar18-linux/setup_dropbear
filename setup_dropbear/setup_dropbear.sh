@@ -40,6 +40,8 @@ import_vars
 
 pacman_install mkinitcpio-dropbear mkinitcpio-netconf mkinitcpio-utils
 
+aur_install mkinitcpio-wifi
+
 #aur_install mkinitcpio-dropbear mkinitcpio-utils
 
 set +u
@@ -70,9 +72,10 @@ echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^MODULES=.*/MODULES=\"${NEW
 NEW_HOOKS=""
 for hook in $(echo ${HOOKS}); do
   if [ "${hook}" = "filesystems" ]; then
-    NEW_HOOKS="${NEW_HOOKS}netconf dropbear encryptssh ${hook} "
+    NEW_HOOKS="${NEW_HOOKS}wifi netconf dropbear encryptssh ${hook} "
   elif [ "${hook}" = "netconf" ] \
   || [ "${hook}" = "dropbear" ] \
+  || [ "${hook}" = "wifi" ] \
   || [ "${hook}" = "encryptssh" ] \
   || [ "${hook}" = "encrypt" ]; then
     continue
