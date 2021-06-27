@@ -93,14 +93,14 @@ for my_key in "${ar18_public_keys[@]}"; do
 done
 echo "${ar18_sudo_password}" | sudo -Sk chmod 600 "/etc/dropbear/root_key"
 
+# Configure wifi
 cd "/tmp"
 rm -rf "/tmp/secrets"
 git clone http://github.com/ar18-linux/secrets
 rm -rf "/tmp/gpg"
 git clone http://github.com/ar18-linux/gpg
 rm -rf "/tmp/wifi_passwords"
-"/tmp/gpg/gpg/decrypt.sh" "/tmp/secrets/secrets/wifi_passwords.gpg" "/tmp/wifi_passwords" "${ar18_sudo_password}"
-#cat "${script_dir}/wifi_passwords/wifi_passwords"
+"/tmp/gpg/gpg/decrypt.sh" "/tmp/secrets/secrets/wifi_passwords.gpg" "/tmp/wifi_passwords" "${ar18_sudo_password}""
 echo "${ar18_sudo_password}" | sudo -Sk rm -f "/etc/wpa_supplicant/initcpio.conf"
 while read line; do
   old_ifs="${IFS}"
