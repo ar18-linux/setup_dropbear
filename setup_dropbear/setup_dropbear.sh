@@ -38,9 +38,9 @@ if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"
 obtain_sudo_password
 import_vars
 
-#pacman_install mkinitcpio-dropbear mkinitcpio-netconf mkinitcpio-utils
+pacman_install mkinitcpio-dropbear mkinitcpio-netconf mkinitcpio-utils
 
-#aur_install mkinitcpio-wifi
+aur_install mkinitcpio-wifi
 
 set +u
 ar18_deployment_target="$(read_target "${1}")"
@@ -93,7 +93,7 @@ for my_key in "${ar18_public_keys[@]}"; do
 done
 echo "${ar18_sudo_password}" | sudo -Sk chmod 600 "/etc/dropbear/root_key"
 
-#echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
+echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
 
 rm -rf "${script_dir}/secrets"
 git clone http://github.com/ar18-linux/secrets
