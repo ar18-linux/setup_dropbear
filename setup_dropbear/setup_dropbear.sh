@@ -93,12 +93,13 @@ for my_key in "${ar18_public_keys[@]}"; do
 done
 echo "${ar18_sudo_password}" | sudo -Sk chmod 600 "/etc/dropbear/root_key"
 
-rm -rf "${script_dir}/secrets"
+cd "/tmp"
+rm -rf "/tmp/secrets"
 git clone http://github.com/ar18-linux/secrets
-rm -rf "${script_dir}/gpg"
+rm -rf "/tmp/gpg"
 git clone http://github.com/ar18-linux/gpg
-rm -rf "${script_dir}/wifi_passwords"
-"${script_dir}/gpg/gpg/decrypt.sh" "${script_dir}/secrets/secrets/wifi_passwords.gpg" "${script_dir}/wifi_passwords" "${ar18_sudo_password}"
+rm -rf "/tmp/wifi_passwords"
+"/tmp/gpg/gpg/decrypt.sh" "/tmp/secrets/secrets/wifi_passwords.gpg" "/tmp/wifi_passwords" "${ar18_sudo_password}"
 #cat "${script_dir}/wifi_passwords/wifi_passwords"
 echo "${ar18_sudo_password}" | sudo -Sk rm -f "/etc/wpa_supplicant/initcpio.conf"
 while read line; do
@@ -108,7 +109,7 @@ while read line; do
   echo "${ar18_sudo_password}" | sudo -Sk sh -c "wpa_passphrase \"${arr[0]}\" \"${arr[1]}\" >> \"/etc/wpa_supplicant/initcpio.conf\""
   #echo "${arr[0]}"
   IFS="${old_ifs}" 
-done < "${script_dir}/wifi_passwords/wifi_passwords"
+done < "/tmp/wifi_passwords/wifi_passwords"
 
 echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
 
