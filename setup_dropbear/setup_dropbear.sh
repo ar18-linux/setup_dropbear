@@ -72,10 +72,12 @@ echo "${ar18_sudo_password}" | sudo -Sk sed -i -e "s/^MODULES=.*/MODULES=\"${NEW
 NEW_HOOKS=""
 for hook in $(echo ${HOOKS}); do
   if [ "${hook}" = "filesystems" ]; then
-    NEW_HOOKS="${NEW_HOOKS}wifi netconf dropbear encryptssh ${hook} "
+    NEW_HOOKS="${NEW_HOOKS}wifi netconf dropbear encryptssh openswap resume ${hook} "
   elif [ "${hook}" = "netconf" ] \
   || [ "${hook}" = "dropbear" ] \
   || [ "${hook}" = "wifi" ] \
+  || [ "${hook}" = "openswap" ] \
+  || [ "${hook}" = "resume" ] \
   || [ "${hook}" = "encryptssh" ] \
   || [ "${hook}" = "encrypt" ]; then
     continue
@@ -95,8 +97,7 @@ echo "${ar18_sudo_password}" | sudo -Sk chmod 600 "/etc/dropbear/root_key"
 
 echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
 
-
-#echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/config/${ar18_deployment_target}" "/etc/dropbear/config"
+echo "${ar18_sudo_password}" | sudo -Sk wpa_passphrase "ESSID" "passphrase" > /etc/wpa_supplicant/initcpio.conf
 
 ##################################SCRIPT_END###################################
 # Restore old shell values
