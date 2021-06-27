@@ -93,8 +93,6 @@ for my_key in "${ar18_public_keys[@]}"; do
 done
 echo "${ar18_sudo_password}" | sudo -Sk chmod 600 "/etc/dropbear/root_key"
 
-echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
-
 rm -rf "${script_dir}/secrets"
 git clone http://github.com/ar18-linux/secrets
 rm -rf "${script_dir}/gpg"
@@ -111,6 +109,8 @@ while read line; do
   #echo "${arr[0]}"
   IFS="${old_ifs}" 
 done < "${script_dir}/wifi_passwords/wifi_passwords"
+
+echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
 
 ##################################SCRIPT_END###################################
 # Restore old shell values
