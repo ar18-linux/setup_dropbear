@@ -39,6 +39,12 @@ obtain_sudo_password
 
 ar18_install "${install_dir}" "${module_name}" "${script_dir}" 
 
+set +u
+ar18_deployment_target="$(read_target "${1}")"
+set -u
+
+"${script_dir}/setup_dropbear/setup_dropbear.sh" "${ar18_deployment_target}"
+
 ##################################SCRIPT_END###################################
 # Restore old shell values
 set +x
