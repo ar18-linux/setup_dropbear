@@ -38,6 +38,9 @@ if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"
 obtain_sudo_password
 import_vars
 
+# Stop running sshd to not hinder dropbear from key creation?
+echo "${ar18_sudo_password}" | sudo -Sk systemctl stop sshd
+
 pacman_install mkinitcpio-dropbear mkinitcpio-netconf mkinitcpio-utils
 
 aur_install mkinitcpio-wifi
