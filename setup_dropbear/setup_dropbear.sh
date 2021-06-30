@@ -38,8 +38,11 @@ if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"
 obtain_sudo_password
 import_vars
 
-# Stop running sshd to not hinder dropbear from key creation?
-echo "${ar18_sudo_password}" | sudo -Sk systemctl stop sshd
+# TODO: If openssh is installed at the time, existing host keys needs to be converted
+# If not, then what?
+if [ -d "/etc/sshd" ]; then
+  echo "${ar18_sudo_password}" | sudo -Sk mv "/etc/sshd" "/etc/sshd_bak"
+fi
 
 pacman_install mkinitcpio-dropbear mkinitcpio-netconf mkinitcpio-utils
 
@@ -115,6 +118,10 @@ while read line; do
 done < "/tmp/wifi_passwords/wifi_passwords"
 
 echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
+
+if [ -d "/etc/sshd_bak" ]; then
+  echo "${ar18_sudo_password}" | sudo -Sk mv "/etc/sshd_bak" "/etc/sshd"
+fi
 
 ##################################SCRIPT_END###################################
 # Restore old shell values
