@@ -40,6 +40,11 @@ import_vars
 
 # TODO: If openssh is installed at the time, existing host keys needs to be converted
 # If not, then what?
+# (Temporary) solution: We hide the ssh folder from dropbear, this way it will generate
+# fresh private keys. SSH clients will see 2 different machines when unlocking the disk
+# and when doing normal ssh stuff. Maybe the openssh private key could be converted for dropbear,
+# but that would also mean that the real private key is now embedded in the initramfs.
+# It might be safer to use the embedded key only for unlocking.
 if [ -d "/etc/ssh" ]; then
   echo "${ar18_sudo_password}" | sudo -Sk mv "/etc/ssh" "/etc/ssh_bak"
 fi
