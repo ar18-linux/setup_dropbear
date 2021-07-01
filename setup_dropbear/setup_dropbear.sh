@@ -41,7 +41,7 @@ import_vars
 # TODO: If openssh is installed at the time, existing host keys needs to be converted
 # If not, then what?
 if [ -d "/etc/sshd" ]; then
-  echo "${ar18_sudo_password}" | sudo -Sk mv "/etc/sshd" "/etc/sshd_bak"
+  echo "${ar18_sudo_password}" | sudo -Sk mv "/etc/ssh" "/etc/ssh_bak"
 fi
 
 pacman_install mkinitcpio-dropbear mkinitcpio-netconf mkinitcpio-utils
@@ -120,7 +120,7 @@ done < "/tmp/wifi_passwords/wifi_passwords"
 echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
 
 if [ -d "/etc/sshd_bak" ]; then
-  echo "${ar18_sudo_password}" | sudo -Sk mv "/etc/sshd_bak" "/etc/sshd"
+  echo "${ar18_sudo_password}" | sudo -Sk mv "/etc/ssh_bak" "/etc/ssh"
 fi
 
 ##################################SCRIPT_END###################################
