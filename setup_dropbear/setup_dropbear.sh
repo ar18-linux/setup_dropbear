@@ -40,7 +40,7 @@ import_vars
 
 # TODO: If openssh is installed at the time, existing host keys needs to be converted
 # If not, then what?
-if [ -d "/etc/sshd" ]; then
+if [ -d "/etc/ssh" ]; then
   echo "${ar18_sudo_password}" | sudo -Sk mv "/etc/ssh" "/etc/ssh_bak"
 fi
 
