@@ -119,7 +119,7 @@ done < "/tmp/wifi_passwords/wifi_passwords"
 
 echo "${ar18_sudo_password}" | sudo -Sk mkinitcpio -P
 
-if [ -d "/etc/sshd_bak" ]; then
+if [ -d "/etc/ssh_bak" ]; then
   echo "${ar18_sudo_password}" | sudo -Sk mv "/etc/ssh_bak" "/etc/ssh"
 fi
 
