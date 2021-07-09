@@ -87,6 +87,7 @@ ar18.script.source_or_execute_config "source" "setup_dropbear" "${ar18_deploymen
 
 IFS=$' \t\n'
 NEW_MODULES=""
+echo "${MODULES}"
 for module in $(echo ${MODULES}); do
   included=0
   for my_module in "${ar18_modules[@]}"; do
