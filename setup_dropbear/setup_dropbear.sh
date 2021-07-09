@@ -99,8 +99,8 @@ for module in $(echo ${MODULES}); do
     NEW_MODULES="${NEW_MODULES}${module} "
   fi
 done
-NEW_MODULES="${NEW_MODULES}${ar18_modules[@]}"
-ar18.script.execute_with_sudo sed -i -e "s/^MODULES=.*/MODULES=\"${NEW_MODULES}\"/g" "/etc/mkinitcpio.conf"
+NEW_MODULES="\"${NEW_MODULES}${ar18_modules[@]}\""
+ar18.script.execute_with_sudo sed -i -e "s/^MODULES=.*/MODULES=${NEW_MODULES}/g" "/etc/mkinitcpio.conf"
 
 NEW_HOOKS=""
 for hook in $(echo ${HOOKS}); do
