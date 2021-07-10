@@ -132,7 +132,7 @@ for module in $(echo ${MODULES}); do
   fi
 done
 NEW_MODULES="\"${NEW_MODULES}${ar18_modules[@]}\""
-ar18.script.execute_with_sudo sed -i -e "s/^MODULES=.*/MODULES=${NEW_MODULES}/g" "/etc/mkinitcpio.conf"
+ar18.script.execute_with_sudo sed -i -E "s/^MODULES=.*/MODULES=${NEW_MODULES}/g" "/etc/mkinitcpio.conf"
 
 NEW_HOOKS=""
 for hook in $(echo ${HOOKS}); do
@@ -150,7 +150,7 @@ for hook in $(echo ${HOOKS}); do
     NEW_HOOKS="${NEW_HOOKS}${hook} "
   fi
 done
-ar18.script.execute_with_sudo sed -i -e "s/^HOOKS=.*/HOOKS=\"${NEW_HOOKS}\"/g" "/etc/mkinitcpio.conf"
+ar18.script.execute_with_sudo sed -i -E "s/^HOOKS=.*/HOOKS=\"${NEW_HOOKS}\"/g" "/etc/mkinitcpio.conf"
 
 # Setup allowed public keys to connect
 ar18.script.execute_with_sudo rm -f "/etc/dropbear/root_key"
@@ -183,6 +183,10 @@ ar18.script.execute_with_sudo mkinitcpio -P
 if [ -d "/etc/ssh_bak" ]; then
   ar18.script.execute_with_sudo mv "/etc/ssh_bak" "/etc/ssh"
 fi
+
+ar18.script.execute_with_sudo cp "${script_dir}/etc_file" "/etc/default/dropbear"
+ar18.script.execute_with_sudo sed -i -E "s/{{AR18_PORT}}/${ar18_port}/g" "/etc/default/dropbear"
+ar18.script.execute_with_sudo chmod 600 "/etc/default/dropbear"
 
 ##################################SCRIPT_END###################################
 set +x

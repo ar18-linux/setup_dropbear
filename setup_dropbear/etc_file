@@ -1,0 +1,25 @@
+#-I 180 : Disconnect the session if no traffic is transmitted or received in 180 seconds.
+#-j : Disable ssh local port forwarding.
+#-k : Also disable remote port forwarding.
+#-p 2222 : Listen Dropbear ssh server on specified address and TCP port. If just a port such as 2222 is given listen on all addresses. up to 10 can be specified (default 22 if none specified).
+#-s : Disable password logins.
+#DROPBEAR_OPTIONS="-I 180 -j -k -p 2222 -s"
+#DROPBEAR_OPTIONS="-I 180 -j -k -p 2222"
+
+
+
+# the TCP port that Dropbear listens on
+DROPBEAR_PORT={{AR18_PORT}}
+
+# any additional arguments for Dropbear
+DROPBEAR_EXTRA_ARGS=
+
+# specify an optional banner file containing a message to be
+# sent to clients before they connect, such as "/etc/issue.net"
+DROPBEAR_BANNER="hello foobar"
+
+# RSA hostkey file (default: /etc/dropbear/dropbear_rsa_host_key)
+#DROPBEAR_RSAKEY="/etc/dropbear/dropbear_rsa_host_key"
+
+# DSS hostkey file (default: /etc/dropbear/dropbear_dss_host_key)
+#DROPBEAR_DSSKEY="/etc/dropbear/dropbear_dss_host_key"
