@@ -1,5 +1,5 @@
 # Should be the same port as your openssh port
-ar18_port=2222
+ar18_port=22
 
 # Modules that need loading for error-free usage on your system
 declare -ag ar18_modules
