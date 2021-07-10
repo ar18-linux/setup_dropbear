@@ -1,0 +1,11 @@
+declare -ag ar18_modules
+ar18_modules=(
+  iwlwifi
+  e1000e
+)
+
+# Public keys as found in ~/.ssh/*.pub
+declare -ag ar18_public_keys
+ar18_public_keys=(
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIMvT9jQBZxgJRfHfv+FKY+bADH67QBuFsGrstoAcbjL5sU6/pC49L10rF0Ewxg42UZ6i/lacIkfXTcAx+QUKKemT+HwqsSzd4yDJ3iJgbxEGDcJgiw7foogBbGki5gsVkT48mt2xDr64uLFcKsSPnfuwiLuIzm8+40WgXZXVgnHYC+NJ+IwU2AWNl4DlCBh9quvXxjxAk1ZQXS52TI/KBnZDGhUbEgsvF9P5qAjyrqByzey+KUKTK+yPAYIj1PUHZNO5UMztzLrRIDVdmzwnfUasduovl0V6JQHvoQQMalcowgyvb0oEJHMll19XLlvf2fNAIqb8kqFeIpEb6UCHx nulysses@AR-XUBUNTU18"
+)
