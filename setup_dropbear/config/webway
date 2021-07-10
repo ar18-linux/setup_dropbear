@@ -1,4 +1,4 @@
-ar18_port=2222
+ar18_port=2212
 
 declare -ag ar18_modules
 ar18_modules=(
