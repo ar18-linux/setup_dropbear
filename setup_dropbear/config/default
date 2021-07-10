@@ -1,4 +1,4 @@
-# Should be the same port as your openssh port
+# Should be a different port than your openssh port
 ar18_port=22
 
 # Modules that need loading for error-free usage on your system
