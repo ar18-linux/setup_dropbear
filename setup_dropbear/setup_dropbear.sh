@@ -180,6 +180,12 @@ trap 'err_report "${BASH_SOURCE[0]}" ${LINENO} "${BASH_COMMAND}"' ERR
 }
 #################################SCRIPT_START##################################
 
+function ar18_extra_cleanup(){
+  if [ -d "/etc/ssh_bak" ]; then
+    ar18.script.execute_with_sudo mv "/etc/ssh_bak" "/etc/ssh"
+  fi
+}
+
 ar18.script.import ar18.script.obtain_sudo_password
 ar18.script.import ar18.script.import_vars
 ar18.script.import ar18.script.execute_with_sudo
@@ -277,10 +283,6 @@ while read line; do
 done < "/tmp/wifi_passwords/wifi_passwords"
 
 ar18.script.execute_with_sudo mkinitcpio -P
-
-if [ -d "/etc/ssh_bak" ]; then
-  ar18.script.execute_with_sudo mv "/etc/ssh_bak" "/etc/ssh"
-fi
 
 ##################################SCRIPT_END###################################
 set +x
